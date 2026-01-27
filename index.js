@@ -62,3 +62,35 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log("Server running on port " + PORT);
 });
+const fs = require("fs");
+const DATA_FILE = "./data.json";
+
+// تحميل البيانات
+let balance = 0;
+let transactions = [];
+
+if (fs.existsSync(DATA_FILE)) {
+  const data = JSON.parse(fs.readFileSync(DATA_FILE));
+  balance = data.balance;
+  transactions = data.transactions;
+}
+app.post("/add", (req, res) => {
+  app.post("/add", (req, res) => {
+  if (!req.session.admin) return res.redirect("/login");
+
+  const { type, amount } = req.body;
+  const value = Number(amount);
+
+  if (type === "in") balance += value;
+  if (type === "out") balance -= value;
+
+  transactions.push({ type, amount: value });
+
+  // حفظ في الملف
+  fs.writeFileSync(
+    DATA_FILE,
+    JSON.stringify({ balance, transactions }, null, 2)
+  );
+
+  res.redirect("/admin");
+});
