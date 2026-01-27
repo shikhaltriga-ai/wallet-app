@@ -14,7 +14,7 @@ app.use(
 
 // بيانات الأدمن
 const ADMIN_EMAIL = "admin@wallet.com";
-const ADMIN_PASSWORD = "123456";
+const ADMIN_PASSWORD = "Waleed12345#";
 
 let balance = 0;
 let transactions = [];
