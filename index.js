@@ -32,6 +32,17 @@ app.post("/login", (req, res) => {
 
   if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
     req.session.admin = true;
+    const DATA_FILE = "./data.json";
+
+// تحميل البيانات
+let balance = 0;
+let transactions = [];
+
+if (fs.existsSync(DATA_FILE)) {
+  const data = JSON.parse(fs.readFileSync(DATA_FILE));
+  balance = data.balance;
+  transactions = data.transactions;
+}
     res.redirect("/admin");
   } else {
     res.send("❌ بيانات غير صحيحة");
@@ -55,36 +66,6 @@ app.post("/add", (req, res) => {
   if (type === "out") balance -= value;
 
   transactions.push({ type, amount: value });
-  res.redirect("/admin");
-});
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log("Server running on port " + PORT);
-});
-const fs = require("fs");
-const DATA_FILE = "./data.json";
-
-// تحميل البيانات
-let balance = 0;
-let transactions = [];
-
-if (fs.existsSync(DATA_FILE)) {
-  const data = JSON.parse(fs.readFileSync(DATA_FILE));
-  balance = data.balance;
-  transactions = data.transactions;
-}
-app.post("/add", (req, res) => {
-  app.post("/add", (req, res) => {
-  if (!req.session.admin) return res.redirect("/login");
-
-  const { type, amount } = req.body;
-  const value = Number(amount);
-
-  if (type === "in") balance += value;
-  if (type === "out") balance -= value;
-
-  transactions.push({ type, amount: value });
 
   // حفظ في الملف
   fs.writeFileSync(
@@ -93,4 +74,18 @@ app.post("/add", (req, res) => {
   );
 
   res.redirect("/admin");
+});
+  const { type, amount } = req.body;
+  const value = Number(amount);
+
+  if (type === "in") balance += value;
+  if (type === "out") balance -= value;
+
+  transactions.push({ type, amount: value });
+  res.redirect("/admin");
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log("Server running on port " + PORT);
 });
