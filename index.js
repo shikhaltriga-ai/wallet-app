@@ -50,14 +50,15 @@ if (fs.existsSync(DATA_FILE)) {
 });
 
 });
-
-app.get("/admin", (req, res) => {
-  if (!req.session.admin) {
-    return res.redirect("/login");
+برنامج.يحصل("/مسؤول", (طلب, res) => {
+  لو (!طلب.حصة.مسؤول) {
+    return res.إعادة_التوجيه("/تسجيل الدخول");
   }
-  app.get("/admin", (req, res) => {
-  res.render("admin", {
-    balance: wallet.balance
+
+  res.يجعل("مسؤول", {
+    توازن: توازن
+  });
+});
 
 app.pos("/add", (req, res) => {
   if (!req.session.admin) return res.redirect("/login");
