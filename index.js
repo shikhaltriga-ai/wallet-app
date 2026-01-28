@@ -53,10 +53,17 @@ app.get("/admin", (req, res) => {
   if (!req.session.admin) {
     return res.redirect("/login");
   }
-  res.render("admin", { balance, transactions });
+  app.get("/admin", (req, res) => {
+  res.render("admin", {
+    balance: wallet.balance
+  });
+});app.get("/admin", (req, res) => {
+  res.render("admin", {
+    balance: wallet.balance
+  });
 });
 
-app.post("/add", (req, res) => {
+app.pos("/add", (req, res) => {
   if (!req.session.admin) return res.redirect("/login");
 
   const { type, amount } = req.body;
