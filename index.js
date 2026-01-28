@@ -49,6 +49,8 @@ if (fs.existsSync(DATA_FILE)) {
   }
 });
 
+});
+
 app.get("/admin", (req, res) => {
   if (!req.session.admin) {
     return res.redirect("/login");
@@ -56,8 +58,6 @@ app.get("/admin", (req, res) => {
   app.get("/admin", (req, res) => {
   res.render("admin", {
     balance: wallet.balance
-
-});
 
 app.pos("/add", (req, res) => {
   if (!req.session.admin) return res.redirect("/login");
