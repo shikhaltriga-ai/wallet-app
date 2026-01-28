@@ -27,3 +27,14 @@
   </ul>
 </body>
 </html>
+<h3>شحن الرصيد (تجريبي)</h3>
+
+<form action="/topup" method="POST">
+  <input type="number" name="amount" placeholder="ادخل مبلغ الشحن" required>
+  <button type="submit">شحن</button>
+</form>
+
+<hr>
+
+<h3>الرصيد الحالي</h3>
+<p><strong><%= balance %></strong></p>
